@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.22)
 
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OS X deployment target")
+#set(CMAKE_OSX_ARCHITECTURES arm64 x86_64)
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
 project(OneEuro VERSION 1.0.0 LANGUAGES CXX)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS YES)
@@ -9,9 +13,6 @@ find_package(JUCE CONFIG REQUIRED)
 
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OS X deployment target")
-#set(CMAKE_OSX_ARCHITECTURES arm64 x86_64)
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 # generate dSYM files for the Release build
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -g")
