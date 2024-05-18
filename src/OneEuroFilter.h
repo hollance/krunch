@@ -30,9 +30,6 @@ public:
 
 // TODO: get dy working on a different scale so we don't need 44100 + 20000 factors
 
-        // This is exactly krunch^5 but I like krunch^4 better
-        //double skewed = (krunch > 0.0) ? std::exp(std::log(krunch) / 0.2) : 0.0;
-
         const double kk = krunch * krunch;
         double skewed = kk * kk;
         double beta = 1.0 + 20000.0 * skewed;
@@ -52,11 +49,11 @@ public:
 private:
     double smoothingFactor(double cutoff) const noexcept
     {
+        // This is not the typical formula for calculating the coefficient
+        // of a one-pole lowpass filter. It comes from the 1€ Filter paper
+        // and allows the cutoff to go over Nyquist.
         double r = 2.0 * M_PI * cutoff;
         return r / (r + sampleRate);
-
-//        cutoff = std::min(cutoff, sampleRate * 0.5 - 1.0);
-//        return 1.0 - std::exp(-2.0 * M_PI * cutoff / sampleRate);
     }
 
     double sampleRate = 44100.0;
