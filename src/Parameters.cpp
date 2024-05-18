@@ -21,6 +21,7 @@ static juce::String stringFromPercent(float value, int)
 Parameters::Parameters(juce::AudioProcessorValueTreeState& apvts_) : apvts(apvts_)
 {
     castParameter(apvts, ParameterID::bypass, bypassParam);
+    castParameter(apvts, ParameterID::quality, qualityParam);
     castParameter(apvts, ParameterID::krunch, krunchParam);
     castParameter(apvts, ParameterID::mix, mixParam);
     castParameter(apvts, ParameterID::outputLevel, outputLevelParam);
@@ -33,6 +34,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout Parameters::createParameterL
     layout.add(std::make_unique<juce::AudioParameterBool>(
         ParameterID::bypass,
         "Bypass",
+        false));
+
+    layout.add(std::make_unique<juce::AudioParameterBool>(
+        ParameterID::quality,
+        "Quality",
         false));
 
     layout.add(std::make_unique<juce::AudioParameterFloat>(
@@ -80,6 +86,7 @@ void Parameters::reset() noexcept
 void Parameters::update() noexcept
 {
     bypassed = bypassParam->get();
+    quality = qualityParam->get();
     krunchSmoother.setTargetValue(krunchParam->get() * 0.01f);
     mixSmoother.setTargetValue(mixParam->get() * 0.01f);
     outputLevelSmoother.setTargetValue(juce::Decibels::decibelsToGain(outputLevelParam->get()));

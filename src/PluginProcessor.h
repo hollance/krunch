@@ -39,6 +39,8 @@ public:
     Parameters params;
 
 private:
+    void sampleRateChanged(double newSampleRate);
+
     OneEuroFilter filterL, filterR;
 
     float bypassFade = 1.0f;
@@ -46,6 +48,7 @@ private:
     float bypassTarget = 0.0f;
 
     Oversampler oversampler;
+    bool quality = false;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioProcessor)
 };

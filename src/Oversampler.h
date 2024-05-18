@@ -8,13 +8,13 @@ public:
     void prepareToPlay(double newSampleRate, int samplesPerBlock) noexcept
     {
         size_t factor = 0;
-//        if (newSampleRate <= 48000.0) {  // 8x
-//            factor = 3;
-//        } else if (newSampleRate <= 96000.0) {  // 4x
-//            factor = 2;
-//        } else if (newSampleRate <= 192000.0) {  // 2x
-//            factor = 1;
-//        }
+        if (newSampleRate <= 48000.0) {  // 8x
+            factor = 3;
+        } else if (newSampleRate <= 96000.0) {  // 4x
+            factor = 2;
+        } else if (newSampleRate <= 192000.0) {  // 2x
+            factor = 1;
+        }
 
         originalSampleRate = newSampleRate;
         sampleRate = newSampleRate * double(1 << factor);

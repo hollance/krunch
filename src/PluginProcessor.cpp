@@ -18,14 +18,7 @@ void AudioProcessor::prepareToPlay(double newSampleRate, int samplesPerBlock)
     oversampler.prepareToPlay(newSampleRate, samplesPerBlock);
     setLatencySamples(oversampler.getLatencyInSamples());
 
-    float sampleRate = float(oversampler.getOversampledRate());
-
-    params.prepare(sampleRate);
-    filterL.prepare(sampleRate);
-    filterR.prepare(sampleRate);
-
-    bypassCoeff = 1.0f - std::exp(-1.0f / (sampleRate * 0.01f));
-
+    sampleRateChanged(newSampleRate);
     reset();
 }
 
@@ -36,14 +29,29 @@ void AudioProcessor::releaseResources()
 
 void AudioProcessor::reset()
 {
-    oversampler.reset();
-
     params.reset();
-    filterL.reset();
-    filterR.reset();
 
     bypassFade = 1.0f;
     bypassTarget = 1.0f;
+}
+
+void AudioProcessor::sampleRateChanged(double newSampleRate)
+{
+    float sampleRate = float(params.quality ? oversampler.getOversampledRate() : newSampleRate);
+
+    DBG("using sampleRate: " << sampleRate);
+
+    params.prepare(sampleRate);
+    filterL.prepare(sampleRate);
+    filterR.prepare(sampleRate);
+
+    bypassCoeff = 1.0f - std::exp(-1.0f / (sampleRate * 0.01f));
+
+    oversampler.reset();
+    filterL.reset();
+    filterR.reset();
+
+    quality = params.quality;
 }
 
 bool AudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
@@ -66,9 +74,16 @@ void AudioProcessor::processBlock(
 
     params.update();
 
-    bypassTarget = params.bypassed ? 0.0f : 1.0f;
+    if (params.quality != quality) {
+        sampleRateChanged(getSampleRate());
+    }
 
-    juce::dsp::AudioBlock<float> renderBlock = oversampler.processSamplesUp(buffer);
+    juce::dsp::AudioBlock<float> renderBlock(buffer);
+    if (params.quality) {
+        renderBlock = oversampler.processSamplesUp(buffer);
+    }
+
+    bypassTarget = params.bypassed ? 0.0f : 1.0f;
 
     float* channelL = renderBlock.getChannelPointer(0);
     float* channelR = renderBlock.getChannelPointer(1);
@@ -100,7 +115,9 @@ void AudioProcessor::processBlock(
         channelR[sample] = outR;
     }
 
-    oversampler.processSamplesDown(buffer);
+    if (params.quality) {
+        oversampler.processSamplesDown(buffer);
+    }
 }
 
 void AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
