@@ -45,6 +45,7 @@ void AudioProcessor::sampleRateChanged(double newSampleRate)
     filterL.prepare(sampleRate);
     filterR.prepare(sampleRate);
 
+    // Note: Should really do bypass on the regular signal, not upsampled.
     bypassCoeff = 1.0f - std::exp(-1.0f / (sampleRate * 0.01f));
 
     oversampler.reset();
