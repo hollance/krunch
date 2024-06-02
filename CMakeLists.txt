@@ -4,7 +4,7 @@ set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OS X deployment ta
 #set(CMAKE_OSX_ARCHITECTURES arm64 x86_64)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
-project(OneEuro VERSION 1.0.0 LANGUAGES CXX)
+project(Krunch VERSION 1.0.0 LANGUAGES CXX)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS YES)
 option(JUCE_ENABLE_MODULE_SOURCE_GROUPS "Enable Module Source Groups" ON)
@@ -60,8 +60,8 @@ endif()
 juce_add_plugin(${PROJECT_NAME}
     COMPANY_NAME "audiodev.blog"
     PLUGIN_MANUFACTURER_CODE Dvbl
-    PLUGIN_CODE Euro
-    BUNDLE_ID "blog.audiodev.one-euro"
+    PLUGIN_CODE Krnc
+    BUNDLE_ID "blog.audiodev.krunch"
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT FALSE
     NEEDS_MIDI_OUTPUT FALSE
@@ -69,12 +69,14 @@ juce_add_plugin(${PROJECT_NAME}
     EDITOR_WANTS_KEYBOARD_FOCUS FALSE
     COPY_PLUGIN_AFTER_BUILD TRUE
     FORMATS AU VST3 Standalone
-    PRODUCT_NAME "OneEuro"
+    PRODUCT_NAME "Krunch"
 )
 
 juce_generate_juce_header(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME} PRIVATE
+    src/LookAndFeel.cpp
+    src/LookAndFeel.h
     src/OneEuroFilter.h
     src/Oversampler.h
     src/Parameters.cpp
@@ -83,6 +85,14 @@ target_sources(${PROJECT_NAME} PRIVATE
     src/PluginEditor.h
     src/PluginProcessor.cpp
     src/PluginProcessor.h
+)
+
+juce_add_binary_data(BinaryData SOURCES
+    assets/Background.png
+    assets/Bypass_On.png
+    assets/Bypass_Off.png
+    assets/Oversample_On.png
+    assets/Oversample_Off.png
 )
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
@@ -97,6 +107,7 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
+        BinaryData
         juce::juce_audio_utils
         juce::juce_dsp
     PUBLIC

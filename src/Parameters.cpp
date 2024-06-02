@@ -21,7 +21,7 @@ static juce::String stringFromPercent(float value, int)
 Parameters::Parameters(juce::AudioProcessorValueTreeState& apvts_) : apvts(apvts_)
 {
     castParameter(apvts, ParameterID::bypass, bypassParam);
-    castParameter(apvts, ParameterID::quality, qualityParam);
+    castParameter(apvts, ParameterID::oversample, oversampleParam);
     castParameter(apvts, ParameterID::krunch, krunchParam);
     castParameter(apvts, ParameterID::mix, mixParam);
     castParameter(apvts, ParameterID::outputLevel, outputLevelParam);
@@ -37,8 +37,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout Parameters::createParameterL
         false));
 
     layout.add(std::make_unique<juce::AudioParameterBool>(
-        ParameterID::quality,
-        "Quality",
+        ParameterID::oversample,
+        "Oversample",
         false));
 
     layout.add(std::make_unique<juce::AudioParameterFloat>(
@@ -86,7 +86,7 @@ void Parameters::reset() noexcept
 void Parameters::update() noexcept
 {
     bypassed = bypassParam->get();
-    quality = qualityParam->get();
+    oversample = oversampleParam->get();
     krunchSmoother.setTargetValue(krunchParam->get() * 0.01f);
     mixSmoother.setTargetValue(mixParam->get() * 0.01f);
     outputLevelSmoother.setTargetValue(juce::Decibels::decibelsToGain(outputLevelParam->get()));
@@ -94,7 +94,7 @@ void Parameters::update() noexcept
 
 void Parameters::smoothen() noexcept
 {
-    krunch = krunchSmoother.getNextValue();
+    krunch = 1.0f - krunchSmoother.getNextValue();
     mix = mixSmoother.getNextValue();
     outputLevel = outputLevelSmoother.getNextValue();
 }

@@ -2,15 +2,11 @@
 
 namespace ParameterID
 {
-    #define PARAMETER_ID(str) const juce::ParameterID str(#str, 1);
-
-    PARAMETER_ID(bypass)
-    PARAMETER_ID(quality)
-    PARAMETER_ID(krunch)
-    PARAMETER_ID(mix)
-    PARAMETER_ID(outputLevel)
-
-    #undef PARAMETER_ID
+    const juce::ParameterID bypass("bypass", 1);
+    const juce::ParameterID oversample("oversample", 1);
+    const juce::ParameterID krunch("krunch", 1);
+    const juce::ParameterID mix("mix", 1);
+    const juce::ParameterID outputLevel("outputLevel", 1);
 }
 
 class Parameters
@@ -26,13 +22,13 @@ public:
     void smoothen() noexcept;
 
     bool bypassed = false;
-    bool quality = false;
+    bool oversample = false;
     float krunch = 0.5f;
-    float mix = 1.0f;
+    float mix = 0.5f;
     float outputLevel = 1.0f;
 
     juce::AudioParameterBool* bypassParam;
-    juce::AudioParameterBool* qualityParam;
+    juce::AudioParameterBool* oversampleParam;
     juce::AudioParameterFloat* krunchParam;
     juce::AudioParameterFloat* mixParam;
     juce::AudioParameterFloat* outputLevelParam;

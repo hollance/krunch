@@ -26,9 +26,9 @@ public:
 
         oversampling->initProcessing(size_t(samplesPerBlock));
 
-        DBG("oversampling factor: " << oversampling->getOversamplingFactor() <<
-            ", sampleRate: " << sampleRate <<
-            ", latency: " << oversampling->getLatencyInSamples());
+        //DBG("oversampling factor: " << oversampling->getOversamplingFactor() <<
+        //    ", sampleRate: " << sampleRate <<
+        //    ", latency: " << oversampling->getLatencyInSamples());
     }
 
     void reset() noexcept

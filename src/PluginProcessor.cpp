@@ -17,7 +17,6 @@ void AudioProcessor::prepareToPlay(double newSampleRate, int samplesPerBlock)
 {
     oversampler.prepareToPlay(newSampleRate, samplesPerBlock);
     setLatencySamples(oversampler.getLatencyInSamples());
-
     sampleRateChanged(newSampleRate);
     reset();
 }
@@ -27,32 +26,31 @@ void AudioProcessor::releaseResources()
     // do nothing
 }
 
-void AudioProcessor::reset()
-{
-    params.reset();
-
-    bypassFade = 1.0f;
-    bypassTarget = 1.0f;
-}
-
 void AudioProcessor::sampleRateChanged(double newSampleRate)
 {
-    float sampleRate = float(params.quality ? oversampler.getOversampledRate() : newSampleRate);
+    float sampleRate = float(params.oversample ? oversampler.getOversampledRate() : newSampleRate);
 
-    DBG("using sampleRate: " << sampleRate);
+    //DBG("using sampleRate: " << sampleRate);
 
     params.prepare(sampleRate);
     filterL.prepare(sampleRate);
     filterR.prepare(sampleRate);
 
-    // Note: Should really do bypass on the regular signal, not upsampled.
+    // TODO: Should really do bypass on the regular signal, not upsampled.
     bypassCoeff = 1.0f - std::exp(-1.0f / (sampleRate * 0.01f));
 
     oversampler.reset();
+    params.reset();
     filterL.reset();
     filterR.reset();
 
-    quality = params.quality;
+    oversample = params.oversample;
+}
+
+void AudioProcessor::reset()
+{
+    bypassFade = 1.0f;
+    bypassTarget = 1.0f;
 }
 
 bool AudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
@@ -75,12 +73,12 @@ void AudioProcessor::processBlock(
 
     params.update();
 
-    if (params.quality != quality) {
+    if (params.oversample != oversample) {
         sampleRateChanged(getSampleRate());
     }
 
     juce::dsp::AudioBlock<float> renderBlock(buffer);
-    if (params.quality) {
+    if (params.oversample) {
         renderBlock = oversampler.processSamplesUp(buffer);
     }
 
@@ -116,7 +114,7 @@ void AudioProcessor::processBlock(
         channelR[sample] = outR;
     }
 
-    if (params.quality) {
+    if (params.oversample) {
         oversampler.processSamplesDown(buffer);
     }
 }
