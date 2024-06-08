@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OS X deployment target")
-#set(CMAKE_OSX_ARCHITECTURES arm64 x86_64)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 project(Krunch VERSION 1.0.0 LANGUAGES CXX)
