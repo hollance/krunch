@@ -35,6 +35,28 @@ On Windows:
 
 In your DAW, look for **audiodev.blog > Krunch**. You can insert this plug-in on a stereo track.
 
+## How to build the plug-in
+
+Krunch is written using JUCE 7.0.12. It should compile OK with JUCE 8 too but I didn't try that yet.
+
+This project uses CMake. It assumes a global installation of JUCE.
+
+On macOS:
+
+```bash
+cmake -B build -G Xcode -D"CMAKE_OSX_ARCHITECTURES=arm64;x86_64"
+```
+
+Then open **build/Krunch.xcodeproj** in Xcode and build the VST3 and/or AU targets.
+
+On Windows:
+
+```text
+cmake -B build -G "Visual Studio 17 2022" -DCMAKE_INSTALL_PREFIX=\path\to\JUCE\cmake\install
+```
+
+Then open **build/Krunch.sln** in Visual Studio and build the VST3 project.
+
 ## Credits & license
 
 Copyright (C) 2024 M.I. Hollemans
