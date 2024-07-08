@@ -57,6 +57,8 @@ cmake -B build -G "Visual Studio 17 2022" -DCMAKE_INSTALL_PREFIX=\path\to\JUCE\c
 
 Then open **build/Krunch.sln** in Visual Studio and build the VST3 project.
 
+[Read more about how this plug-in works on my blog](https://audiodev.blog/krunch/)
+
 ## Credits & license
 
 Copyright (C) 2024 M.I. Hollemans
