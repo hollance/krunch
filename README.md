@@ -27,7 +27,7 @@ Extract the downloaded ZIP file.
 On Mac:
 
 - copy **Krunch.component** to the folder **/Library/Audio/Plug-Ins/Components**
-- Copy **Krunch.vst3** to the folder **/Library/Audio/Plug-Ins/VST3**
+- copy **Krunch.vst3** to the folder **/Library/Audio/Plug-Ins/VST3**
 
 On Windows:
 
