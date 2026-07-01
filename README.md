@@ -18,11 +18,13 @@ How to use this plug-in:
 
 Suggested workflow: Set MIX to 100%, dial KRUNCH to where it sounds nasty, then reduce MIX again to bring some of the high end back. Toggle BYP to compare and bring up OUT to equalize the loudness. Adding just a bit of subtle saturation is usually enough!
 
+[Read more about how this plug-in works on my blog](https://audiodev.blog/krunch/) or [watch my ADC24 talk](https://www.youtube.com/watch?v=KdFQDnwav0Y).
+
 ## Installation instructions
 
 Download the latest version from the [Releases page](https://github.com/hollance/krunch/releases).
 
-Extract the downloaded ZIP file.
+Extract the downloaded ZIP file. There are subfolders for Mac, Windows, and Linux.
 
 On Mac:
 
@@ -32,6 +34,11 @@ On Mac:
 On Windows:
 
 - copy **Krunch.vst3** to the folder **C:\Program Files\Common Files\VST3**
+
+On Linux:
+
+- copy **Krunch.vst3** to the folder **~/.vst3**
+- copy **Krunch.lv2** to the folder **~/.lv2**
 
 In your DAW, look for **audiodev.blog > Krunch**. You can insert this plug-in on a stereo track.
 
@@ -49,13 +56,23 @@ Then open **build/Krunch.xcodeproj** in Xcode and build the VST3 and/or AU targe
 
 On Windows:
 
-```text
+```bash
 cmake -B build -G "Visual Studio 17 2022"
 ```
 
 Then open **build/Krunch.sln** in Visual Studio and build the VST3 project.
 
-[Read more about how this plug-in works on my blog](https://audiodev.blog/krunch/)
+On Linux:
+
+```bash
+cmake -B build-release -G "Ninja Multi-Config" \
+    -DCMAKE_C_COMPILER=/usr/bin/clang \
+    -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
+    -DCMAKE_CONFIGURATION_TYPES="Release;Debug"
+
+cmake --build build-release --config Release --target Krunch_VST3
+cmake --build build-release --config Release --target Krunch_LV2
+```
 
 ## Credits & license
 
