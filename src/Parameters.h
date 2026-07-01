@@ -1,13 +1,16 @@
 #pragma once
 
-namespace ParameterID
-{
-    const juce::ParameterID bypass("bypass", 1);
-    const juce::ParameterID oversample("oversample", 1);
-    const juce::ParameterID krunch("krunch", 1);
-    const juce::ParameterID mix("mix", 1);
-    const juce::ParameterID outputLevel("outputLevel", 1);
-}
+#include <JuceHeader.h>
+
+namespace ParameterID {
+
+const juce::ParameterID bypass("bypass", 1);
+const juce::ParameterID oversample("oversample", 1);
+const juce::ParameterID krunch("krunch", 1);
+const juce::ParameterID mix("mix", 1);
+const juce::ParameterID outputLevel("outputLevel", 1);
+
+}  // namespace ParameterID
 
 class Parameters
 {
@@ -39,4 +42,6 @@ private:
     juce::LinearSmoothedValue<float> krunchSmoother;
     juce::LinearSmoothedValue<float> mixSmoother;
     juce::LinearSmoothedValue<float> outputLevelSmoother;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Parameters)
 };

@@ -19,10 +19,10 @@ public:
         originalSampleRate = newSampleRate;
         sampleRate = newSampleRate * double(1 << factor);
 
-        oversampling.reset(new juce::dsp::Oversampling<float>(
+        oversampling = std::make_unique<juce::dsp::Oversampling<float>>(
             2, factor,
             juce::dsp::Oversampling<float>::FilterType::filterHalfBandPolyphaseIIR,
-            true, true));
+            true, true);
 
         oversampling->initProcessing(size_t(samplesPerBlock));
 

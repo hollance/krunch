@@ -1,8 +1,8 @@
 #pragma once
 
-#include <JuceHeader.h>
-#include "PluginProcessor.h"
 #include "LookAndFeel.h"
+#include "PluginProcessor.h"
+#include <JuceHeader.h>
 
 class AudioProcessorEditor : public juce::AudioProcessorEditor
 {

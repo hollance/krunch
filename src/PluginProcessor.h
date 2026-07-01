@@ -1,9 +1,9 @@
 #pragma once
 
-#include <JuceHeader.h>
-#include "Parameters.h"
 #include "OneEuroFilter.h"
 #include "Oversampler.h"
+#include "Parameters.h"
+#include <JuceHeader.h>
 
 class AudioProcessor : public juce::AudioProcessor
 {

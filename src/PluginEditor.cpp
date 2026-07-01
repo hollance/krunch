@@ -1,4 +1,3 @@
-#include "PluginProcessor.h"
 #include "PluginEditor.h"
 
 AudioProcessorEditor::AudioProcessorEditor(AudioProcessor& p) :

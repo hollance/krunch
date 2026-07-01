@@ -1,5 +1,5 @@
-#include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "PluginProcessor.h"
 
 AudioProcessor::AudioProcessor() :
     juce::AudioProcessor(
@@ -28,7 +28,7 @@ void AudioProcessor::releaseResources()
 
 void AudioProcessor::sampleRateChanged(double newSampleRate)
 {
-    float sampleRate = float(params.oversample ? oversampler.getOversampledRate() : newSampleRate);
+    auto sampleRate = float(params.oversample ? oversampler.getOversampledRate() : newSampleRate);
 
     //DBG("using sampleRate: " << sampleRate);
 
