@@ -87,7 +87,7 @@ void LookAndFeel::drawRotarySlider(
 
 juce::Font LookAndFeel::getSliderPopupFont(juce::Slider&)
 {
-    return juce::Font(11.0f);
+    return juce::Font(juce::FontOptions(12.0f));
 }
 
 int LookAndFeel::getSliderPopupPlacement(juce::Slider& slider)

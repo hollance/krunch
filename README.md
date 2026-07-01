@@ -37,9 +37,7 @@ In your DAW, look for **audiodev.blog > Krunch**. You can insert this plug-in on
 
 ## How to build the plug-in
 
-Krunch is written using JUCE 7.0.12. It should compile OK with JUCE 8 too but I didn't try that yet.
-
-This project uses CMake. It assumes a global installation of JUCE.
+This project uses CMake and requires JUCE 8 or later.
 
 On macOS:
 
@@ -52,7 +50,7 @@ Then open **build/Krunch.xcodeproj** in Xcode and build the VST3 and/or AU targe
 On Windows:
 
 ```text
-cmake -B build -G "Visual Studio 17 2022" -DCMAKE_INSTALL_PREFIX=\path\to\JUCE\cmake\install
+cmake -B build -G "Visual Studio 17 2022"
 ```
 
 Then open **build/Krunch.sln** in Visual Studio and build the VST3 project.
@@ -61,7 +59,7 @@ Then open **build/Krunch.sln** in Visual Studio and build the VST3 project.
 
 ## Credits & license
 
-Copyright (C) 2024 M.I. Hollemans
+Copyright (C) 2024-2026 M.I. Hollemans
 
 This program is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.en.html) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
