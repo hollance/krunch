@@ -46,7 +46,15 @@ In your DAW, look for **audiodev.blog > Krunch**. You can insert this plug-in on
 
 This project uses CMake and requires JUCE 8 or later.
 
-On macOS:
+First clone the repo:
+
+```bash
+git clone https://github.com/hollance/krunch
+cd krunch
+git submodule update --init --recursive
+```
+
+Building on macOS:
 
 ```bash
 cmake -B build -G Xcode -D"CMAKE_OSX_ARCHITECTURES=arm64;x86_64"
@@ -54,7 +62,7 @@ cmake -B build -G Xcode -D"CMAKE_OSX_ARCHITECTURES=arm64;x86_64"
 
 Then open **build/Krunch.xcodeproj** in Xcode and build the VST3 and/or AU targets.
 
-On Windows:
+Building on Windows:
 
 ```bash
 cmake -B build -G "Visual Studio 17 2022"
@@ -62,7 +70,7 @@ cmake -B build -G "Visual Studio 17 2022"
 
 Then open **build/Krunch.sln** in Visual Studio and build the VST3 project.
 
-On Linux:
+Building on Linux:
 
 ```bash
 cmake -B build -G "Ninja Multi-Config" \
